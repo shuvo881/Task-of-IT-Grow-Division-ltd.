@@ -1,52 +1,59 @@
-import requests
+import os
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
-def get_location_info(api_key, address):
-    # Google Maps Geocoding API endpoint
-    endpoint = "https://maps.googleapis.com/maps/api/geocode/json"
 
-    # Parameters for the API request
-    params = {
-        'address': address,
-        'key': api_key,
-    }
+# If modifying these SCOPES, delete the file token.json.
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-    try:
-        # Sending a GET request to the API
-        response = requests.get(endpoint, params=params)
-        response.raise_for_status()  # Check if the request was successful
+# The ID and range of the spreadsheet.
+SPREADSHEET_ID = '1C258aEMCLIlYVdf1PZOevpJIeQjama6bYkB9qYGahJg'
+RANGE_NAME = 'Sheet1!A1:C6'
 
-        # Parse the JSON response
-        data = response.json()
+def authenticate_google_sheets():
+    creds = None
 
-        # Check if the response contains results
-        if data['status'] == 'OK':
-            # Extract relevant information
-            location = data['results'][0]['formatted_address']
-            latitude = data['results'][0]['geometry']['location']['lat']
-            longitude = data['results'][0]['geometry']['location']['lng']
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first time.
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json')
 
-            return {
-                'location': location,
-                'latitude': latitude,
-                'longitude': longitude,
-            }
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
         else:
-            print(f"Error: {data['status']}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'client_secret_key.json', SCOPES)
+            creds = flow.run_local_server(port=0)
 
-if __name__ == "__main__":
-    # Replace 'YOUR_API_KEY' with your actual Google API key
-    api_key = 'YOUR_API_KEY'
+        # Save the credentials for the next run
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
 
-    # Replace '1600 Amphitheatre Parkway, Mountain View, CA' with the address you want to query
-    address = '1600 Amphitheatre Parkway, Mountain View, CA'
+    return creds
 
-    # Get location information
-    location_info = get_location_info(api_key, address)
+def get_spreadsheet_data():
+    # Authenticate and create a Google Sheets API service
+    creds = authenticate_google_sheets()
+    service = build('sheets', 'v4', credentials=creds)
 
-    # Print the results
-    if location_info:
-        print("Location:", location_info['location'])
-        print("Latitude:", location_info['latitude'])
-        print("Longitude:", location_info['longitude'])
+    # Call the Sheets API
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+    values = result.get('values', [])
+
+    if not values:
+        print('No data found.')
+    else:
+        print('Data:')
+        for row in values:
+            print(f"{row[0]}, {row[1]}, {row[2]}")
+
+
+
+
+get_spreadsheet_data()
