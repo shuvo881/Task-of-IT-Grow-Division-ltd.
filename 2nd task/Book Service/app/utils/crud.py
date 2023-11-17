@@ -4,7 +4,8 @@ from models.author import Author, AuthorCreate
 from models.client import Client, ClientCreate
 
 def create_book(db: Session, book: BookCreate):
-    db_book = Book(**book.dict())
+    db_book = Book(**book.model_dump())
+    print(db_book)
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
@@ -16,7 +17,7 @@ def edit_book(db: Session, book_id: int, book: BookUpdate):
 
 def get_books_by_filter(db: Session, first_letter: str = None, author: str = None):
     # Implement the logic to get books based on filters
-    pass
+    return db.query(Book).all()
 
 def create_author(db: Session, author: AuthorCreate):
     db_author = Author(**author.dict())

@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.ext.declarative import declarative_base
 from fastapi import Depends
 
-DATABASE_URL = "postgresql://admin:admin_password@localhost/book_service_db"
+DATABASE_URL = "postgresql://shuvo:root@localhost:5432/book_service_db"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -17,3 +17,4 @@ def get_db() -> Session:
         yield db
     finally:
         db.close()
+

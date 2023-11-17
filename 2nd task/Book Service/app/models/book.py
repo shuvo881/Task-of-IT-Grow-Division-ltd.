@@ -12,6 +12,8 @@ class Book(Base):
     author_id = Column(Integer, ForeignKey("authors.id"))
 
     author = relationship("Author", back_populates="books")
+    class Config:
+        orm_mode = True
 
 
 class BookCreate(BaseModel):
@@ -23,8 +25,3 @@ class BookUpdate(BaseModel):
     title: str
     author_id: int
 
-class BookListResponse(BaseModel):
-    items: List[Book]
-
-    class Config:
-        orm_mode = True

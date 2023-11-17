@@ -10,7 +10,7 @@ class Client(Base):
     id = Column(Integer, primary_key=True, index=True)
     full_name = Column(String, index=True)
 
-    books = relationship("Book", back_populates="client")
+    #books = relationship("Book", back_populates="client")
 
 
 class ClientCreate(BaseModel):
