@@ -11,9 +11,9 @@ class Book(Base):
     title = Column(String, index=True)
     author_id = Column(Integer, ForeignKey("authors.id"))
 
-    author = relationship("Author", back_populates="books")
-    class Config:
-        orm_mode = True
+    # Define the relationship with the Author model
+    author = relationship('Author', back_populates='books')
+    transactions = relationship('Transaction', back_populates='book')
 
 
 class BookCreate(BaseModel):
