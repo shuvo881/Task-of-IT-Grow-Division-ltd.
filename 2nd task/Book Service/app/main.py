@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from routes import book, author, client, transaction
-from utils.database import engine
-import models
+from app.routes import book, author, client, transaction
+from app.utils.database import engine
+from app import models
 
 app = FastAPI()
 

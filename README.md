@@ -1,2 +1,7 @@
-# Task-of-IT-Grow-Division-ltd.
-This is simple task  for getting a job position at Middle Python Developer (Machine Learning/AI)
+# How to runs given tasks
+
+## File formate:
+    Task-OF-IT-GROW-DIVISION-LTD
+        - 1st task
+        - 2nd task
+            - Book

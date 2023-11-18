@@ -2,10 +2,10 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from utils.database import get_db
-from models.client import ClientCreate
-from utils.crud import create_client, get_clients
-from utils.security import create_access_token
+from app.utils.database import get_db
+from app.models.client import ClientCreate
+from app.utils.crud import create_client, get_clients
+from app.utils.security import create_access_token
 
 router = APIRouter(prefix="/clients", tags=["Clients"])
 

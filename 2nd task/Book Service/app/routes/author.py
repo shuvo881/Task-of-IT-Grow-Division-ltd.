@@ -2,9 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from utils.database import get_db
-from models.author import AuthorCreate, Author
-from utils.crud import create_author, get_authors
+from app.utils.database import get_db
+from app.models.author import AuthorCreate, Author
+from app.utils.crud import create_author, get_authors
 
 router = APIRouter(prefix="/authors", tags=["Authors"])
 

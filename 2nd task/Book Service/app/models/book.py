@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from utils.database import Base
+from app.utils.database import Base
 from typing import List
 
 class Book(Base):

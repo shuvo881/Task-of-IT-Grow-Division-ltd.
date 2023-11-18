@@ -1,9 +1,9 @@
-from models.client import Client
-from utils.security import get_current_user
+from app.models.client import Client
+from app.utils.security import get_current_user
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from utils.database import get_db
-from utils.crud import link_client_to_book, unlink_client_from_book
+from app.utils.database import get_db
+from app.utils.crud import link_client_to_book, unlink_client_from_book
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 

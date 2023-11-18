@@ -2,9 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from utils.database import get_db
-from models.book import BookCreate, BookUpdate, Book
-from utils.crud import create_book, edit_book, get_books_by_filter
+from app.utils.database import get_db
+from app.models.book import BookCreate, BookUpdate, Book
+from app.utils.crud import create_book, edit_book, get_books_by_filter
 
 router = APIRouter(prefix="/books", tags=["Books"])
 

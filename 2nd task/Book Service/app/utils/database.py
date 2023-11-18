@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from fastapi import Depends
 
-DATABASE_URL = "postgresql://shuvo:root@localhost:5432/book_service_db"
+DATABASE_URL = "postgresql://postgres:fg11CAf332caA6G5e3A*a-f*61Gc4GbD@viaduct.proxy.rlwy.net:33651/railway"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

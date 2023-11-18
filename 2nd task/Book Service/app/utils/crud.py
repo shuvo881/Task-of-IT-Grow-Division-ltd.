@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from models.book import Book, BookCreate, BookUpdate
-from models.author import Author, AuthorCreate
-from models.client import Client, ClientCreate
-from models.transaction import Transaction
+from app.models.book import Book, BookCreate, BookUpdate
+from app.models.author import Author, AuthorCreate
+from app.models.client import Client, ClientCreate
+from app.models.transaction import Transaction
 
 def create_book(db: Session, book: BookCreate):
     db_book = Book(**book.model_dump())
